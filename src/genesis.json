@@ -1,0 +1,75 @@
+{
+  "config": {
+      "byzantiumBlock": 0,
+      "chainId": 789809,
+      "constantinopleBlock": 0,
+      "contractNativeMinterConfig": {
+          "adminAddresses": [
+              "0xf7c3eda4e79dd2f69285b77f6c44c08de4a1c3c2"
+          ],
+          "blockTimestamp": 0
+      },
+      "durangoTimestamp": 1607144400,
+      "eUpgradeTimestamp": 1607144400,
+      "eip150Block": 0,
+      "eip155Block": 0,
+      "eip158Block": 0,
+      "feeConfig": {
+          "gasLimit": 15000000,
+          "targetBlockRate": 2,
+          "minBaseFee": 25000000000,
+          "targetGas": 15000000,
+          "baseFeeChangeDenominator": 36,
+          "minBlockGasCost": 0,
+          "maxBlockGasCost": 1000000,
+          "blockGasCostStep": 200000
+      },
+      "feeManagerConfig": {
+          "adminAddresses": [
+              "0xf7c3eda4e79dd2f69285b77f6c44c08de4a1c3c2"
+          ],
+          "blockTimestamp": 0
+      },
+      "homesteadBlock": 0,
+      "istanbulBlock": 0,
+      "muirGlacierBlock": 0,
+      "petersburgBlock": 0,
+      "subnetEVMTimestamp": 0,
+      "warpConfig": {
+            "blockTimestamp": 1715203615,
+            "quorumNumerator": 67
+      }
+  },
+  "nonce": "0x0",
+  "timestamp": "0x0",
+  "extraData": "0x",
+  "gasLimit": "0xe4e1c0",
+  "difficulty": "0x0",
+  "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "coinbase": "0x0000000000000000000000000000000000000000",
+  "alloc": {
+      "e497e6e92944fb10d44e31f0ee4e90c29b5e92da": {
+          "balance": "0xd3c21bcecceda1000000"
+      },
+      "e53545a87f5de9eb8fd6c02fa88a5267fa4723e8": {
+          "balance": "0xd3c21bcecceda1000000"
+      },
+      "e61c87d4464d493a237960ea0623c37e2d5e5697": {
+          "balance": "0xd3c21bcecceda1000000"
+      },
+      "e6f1bedfe504e292bd8dcf8547ff3a809c637150": {
+          "balance": "0xd3c21bcecceda1000000"
+      },
+      "eb6396f0949b719c6f14db4ed7dbc96bab628f62": {
+          "balance": "0xd3c21bcecceda1000000"
+      }
+  },
+  "airdropHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "airdropAmount": null,
+  "number": "0x0",
+  "gasUsed": "0x0",
+  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+  "baseFeePerGas": null,
+  "excessBlobGas": null,
+  "blobGasUsed": null
+}
