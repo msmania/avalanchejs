@@ -5,12 +5,12 @@
       "constantinopleBlock": 0,
       "contractNativeMinterConfig": {
           "adminAddresses": [
-              "0xf7c3eda4e79dd2f69285b77f6c44c08de4a1c3c2"
+              "0xe497e6e92944fb10d44e31f0ee4e90c29b5e92da"
           ],
           "blockTimestamp": 0
       },
-      "durangoTimestamp": 1607144400,
-      "eUpgradeTimestamp": 1607144400,
+      "durangoTimestamp": 1707840000,
+      "eUpgradeTimestamp": 253431244800,
       "eip150Block": 0,
       "eip155Block": 0,
       "eip158Block": 0,
@@ -26,7 +26,7 @@
       },
       "feeManagerConfig": {
           "adminAddresses": [
-              "0xf7c3eda4e79dd2f69285b77f6c44c08de4a1c3c2"
+              "0xe497e6e92944fb10d44e31f0ee4e90c29b5e92da"
           ],
           "blockTimestamp": 0
       },
