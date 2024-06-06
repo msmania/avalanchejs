@@ -38,14 +38,27 @@ export class JrpcProvider {
       method,
       params: parameters,
     };
-    const resp = await fetch(this.url, {
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...fetchOptions?.headers,
+    };
+
+    const url = new URL(this.url);
+    if (url.username || url.password) {
+      const credential =
+        Buffer.from(`${url.username}:${url.password}`).toString('base64');
+      headers['Authorization'] = `Basic ${credential}`;
+      url.username = '';
+      url.password = '';
+    }
+    const routedRpcUrl = url.toString();
+
+    const resp = await fetch(routedRpcUrl, {
       ...fetchOptions,
       method: 'POST',
       body: JSON.stringify(body),
-      headers: {
-        'Content-Type': 'application/json',
-        ...fetchOptions?.headers,
-      },
+      headers,
     })
       .then(async (r) => {
         return r.json();
