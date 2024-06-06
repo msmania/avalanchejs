@@ -408,6 +408,52 @@ async function createChain(
   console.log(`BlockchainID ${resp.txID}`);
 }
 
+async function addSubnetValidator(
+  fromPrivKeyStr,
+  nodeID,
+  subnetID,
+  stakePeriodInDays,
+  stake,
+) {
+  const fromPrivKey = utils.hexToBuffer(fromPrivKeyStr);
+  const fromAddr = 'P-' + bech32AddressFromKey(fromPrivKey, Ctx.hrp);
+  const fromAddrBytes = utils.bech32ToBytes(fromAddr);
+
+  const {utxos} = await PvmApi.getUTXOs({addresses: [fromAddr]});
+  if (utxos.length == 0) {
+    throw new Error("Insufficient funds");
+  }
+
+  const startTime = await new pvm.PVMApi().getTimestamp();
+  const startDate = new Date(startTime.timestamp);
+  const start = BigInt(startDate.getTime() / 1000);
+  const endTime = new Date(startTime.timestamp);
+  endTime.setDate(endTime.getDate() + stakePeriodInDays);
+  const end = BigInt(endTime.getTime() / 1000);
+
+  const tx = pvm.newAddSubnetValidatorTx(
+    Ctx,
+    utxos,
+    [fromAddrBytes],
+    nodeID,
+    start,
+    end,
+    stake,
+    subnetID,
+    [0], // SubnetAuth
+    null // SpendOptions
+  );
+  await addTxSignatures({
+    unsignedTx: tx,
+    privateKeys: [fromPrivKey],
+  });
+  tx.credentials[1] = tx.credentials[0]; // hack
+  const txSigned = tx.getSignedTx();
+  const resp = await PvmApi.issueSignedTx(txSigned);
+  await waitForTx(resp.txID);
+  console.log(`txHash ${resp.txID}`);
+}
+
 async function main() {
   await transferCtoC(
     process.env.C_PRIVATE_KEY,
@@ -424,7 +470,7 @@ async function main() {
     'P-' + bech32AddressFromKey(utils.hexToBuffer(process.env.P_PRIVATE_KEY_DELE), Ctx.hrp),
     BigInt(1 * 1e9),
   );
-  const txHash = await createSubnet(
+  const subnetID = await createSubnet(
     process.env.P_PRIVATE_KEY,
     [
       'P-' + bech32AddressFromKey(utils.hexToBuffer(process.env.P_PRIVATE_KEY), Ctx.hrp),
@@ -432,17 +478,25 @@ async function main() {
   );
   await createChain(
     process.env.P_PRIVATE_KEY,
-    txHash,
+    subnetID,
     "Kinesis",
     genesisJson,
+  );
+
+  const info = new Info(process.env.AVAX_PUBLIC_URL);
+  const nodeId = await info.getNodeId();
+
+  await addSubnetValidator(
+    process.env.P_PRIVATE_KEY,
+    nodeId.nodeID,
+    subnetID,
+    7,
+    100,
   );
   return;
 
   await showHistory();
   return;
-
-  const info = new Info(process.env.AVAX_PUBLIC_URL);
-  const nodeId = await info.getNodeId();
 
   await stake(
     BigInt(2100 * 1e9),
